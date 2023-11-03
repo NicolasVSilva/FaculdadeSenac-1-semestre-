@@ -32,14 +32,19 @@ public class Exemplo1 {
         return vetor;
     }
     
-    public static void imprimir(int[] vetor){
+    public static void imprimir(int[] vetor, int[] pares, int[] impares){
         System.out.println("*- IMPRIMIR -*");
         for(int i=0; i<vetor.length; i++){
             System.out.printf("vetor[%d]: %d\n", i, vetor[i]);
         }
+        for(int i=0; i<pares.length; i++){
+            System.out.printf("vetor[%d]: %d\n", i, pares[i]);
+        }
+        for(int i=0; i<impares.length; i++){
+            System.out.printf("vetor[%d]: %d\n", i, impares[i]);
+        }
     }
-    
-    
+
     /**
      * TO DO
      * 1) Função para imprimir os numeros pares
@@ -50,11 +55,68 @@ public class Exemplo1 {
      * 6) Função para obter um numero
      * 7) Função para verificar quantas vezes ele aparece no vetor
      */
-    
+
+    //A partir daqui começo minha lição
+    //Primeiro vou fazer a separação da quantidade de pares e impares, para depois criar um vetor e adicionar os valores
+    public static int[] vetorPar(int[] vetor){
+        System.out.println("*- VETORPAR -*");
+        int par = 0, id = 0;
+        for(int i = 0; i<vetor.length; i++){
+            if(vetor[i]%2==0){
+                par++;
+            }
+        }
+        int[] pares = new int[par];
+        pares = criar(par, vetor, id);
+        return pares;
+    }
+    public static int[] vetorImpar(int[] vetor){
+        System.out.println("*- VETORIMPAR -*");
+        int impar = 0, id = 1;
+        for(int i = 0; i<vetor.length; i++){
+            if(vetor[i]%2!=0){
+                impar++;
+            }
+        }
+        int[] impares = new int[impar];
+        impares = criar(par, vetor, id);
+        return impares;
+    }
+    public static int[] criar(int t, int[] vetor,int id){
+        System.out.println("*- CRIAR -*");
+        if(id == 0){
+            int [] pares = new int[t];
+            int e = 0;
+            for(int i = 0; i<vetor.length; i++){
+                if(vetor[i]%2==0){
+                    pares[e] = vetor[i];
+                    e++;
+                }
+            }
+            return pares;
+        }else{
+            int [] impares = new int[t];
+            int e = 0;
+            for(int i = 0; i<vetor.length; i++){
+                if(vetor[i]%2!=0){
+                    impares[e] = vetor[i];
+                    e++;
+                }
+            }
+            return imapres;
+        }
+    }
+
+
+
+
+
     
     public static void main(String[] args) {
        int t = tamanho();
        int[] vetor = criarVetor(t);
-       imprimir(vetor);
+       int[] pares = vetorPar(vetor);
+       int[] impares = vetorImpar(vetor);
+       imprimir(vetor, pares, impares);
      }
 }
