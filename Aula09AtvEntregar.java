@@ -52,12 +52,12 @@ public class Exemplo1 {
      * 3) Função separar em um vetor os numeros pares
      * 4) Função separar em um vetor os numeros Impares
      * 5) Função para verificar ocorrencia de um determinado numero
-     * 6) Função para obter um numero
+     * 6) Função para obter um numero atrávez do index
      * 7) Função para verificar quantas vezes ele aparece no vetor
      */
 
     //A partir daqui começo minha lição
-    //Primeiro vou fazer a separação da quantidade de pares e impares, para depois criar um vetor e adicionar os valores
+    //Primeiro vou fazer a separação da quantidade de pares e impares, para depois criar um vetor e adicionar os valores(exercicios "1, 2, 3 e 4")
     public static int[] vetorPar(int[] vetor){
         System.out.println("*- VETORPAR -*");
         int par = 0, id = 0;
@@ -107,16 +107,47 @@ public class Exemplo1 {
         }
     }
 
+    //Aqui pedimos um valor e em seguida verificamos se o mesmo está contido no vetor(Exercicio "5")
+    public static void ocorrencia(int[] vetor){
+        Scanner input = new Scanner(System.in);
+        int ocorre, positivo;
+        System.out.println("Qual numero deseja conferir?");
+        ocorre = input.nextInt();
+        positivo = verifica(ocorre, vetor);
+        if(positivo!=0){
+            System.out.printf("O numero '%d' está contido no vetor", ocorre);
+        }else{
+            System.out.printf("O numero '%d' não está contido no vetor", ocorre);
+        }
+    }
+    public static int verifica(int ocorre, int[] vetor){
+        int positivo = 0;
+        for(int i = 0; i<vetor.length; i++){
+            if(vetor[i]==ocorre){
+                positivo++;
+            }
+        }
+        return positivo;
+    }
 
-
-
-
+    //Agora vamos verificar o numero de acordo com seu index e na sequencia quantas vezes ele aparece(Exercicios "6 e 7")
+    public static void index(int[] vetor){
+        Scanner input = new Scanner(System.in);
+        int index, positivo;
+        System.out.println("Qual index deseja conferir?");
+        index = input.nextInt();
+        positivo = verifica(index, vetor);
+        System.out.printf("O valor 'vetor[%d]: %d' aparece %d vezes", index, vetor[index], positivo);
+    }
     
+    //Só organizar tudo no 'main' e está pronto
     public static void main(String[] args) {
        int t = tamanho();
        int[] vetor = criarVetor(t);
        int[] pares = vetorPar(vetor);
        int[] impares = vetorImpar(vetor);
+       ocorrencia(vetor);
+       index(vetor);
        imprimir(vetor, pares, impares);
      }
 }
