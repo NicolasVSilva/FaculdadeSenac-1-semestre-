@@ -34,12 +34,15 @@ public class Exemplo1 {
     
     public static void imprimir(int[] vetor, int[] pares, int[] impares){
         System.out.println("*- IMPRIMIR -*");
+        System.out.println("Vetor: ");
         for(int i=0; i<vetor.length; i++){
             System.out.printf("vetor[%d]: %d\n", i, vetor[i]);
         }
+        System.out.println("\nPares: ");
         for(int i=0; i<pares.length; i++){
             System.out.printf("vetor[%d]: %d\n", i, pares[i]);
         }
+        System.out.println("\nImpares: ");
         for(int i=0; i<impares.length; i++){
             System.out.printf("vetor[%d]: %d\n", i, impares[i]);
         }
@@ -79,7 +82,7 @@ public class Exemplo1 {
             }
         }
         int[] impares = new int[impar];
-        impares = criar(par, vetor, id);
+        impares = criar(impar, vetor, id);
         return impares;
     }
     public static int[] criar(int t, int[] vetor,int id){
@@ -103,28 +106,38 @@ public class Exemplo1 {
                     e++;
                 }
             }
-            return imapres;
+            return impares;
         }
     }
 
     //Aqui pedimos um valor e em seguida verificamos se o mesmo está contido no vetor(Exercicio "5")
     public static void ocorrencia(int[] vetor){
+        System.out.println("*- OCORRENCIA -*");
         Scanner input = new Scanner(System.in);
-        int ocorre, positivo;
+        int ocorre, positivo, id=1;
         System.out.println("Qual numero deseja conferir?");
         ocorre = input.nextInt();
-        positivo = verifica(ocorre, vetor);
+        positivo = verifica(ocorre, vetor, id);
         if(positivo!=0){
-            System.out.printf("O numero '%d' está contido no vetor", ocorre);
+            System.out.printf("O numero '%d' está contido no vetor\n", ocorre);
         }else{
-            System.out.printf("O numero '%d' não está contido no vetor", ocorre);
+            System.out.printf("O numero '%d' não está contido no vetor\n", ocorre);
         }
     }
-    public static int verifica(int ocorre, int[] vetor){
+    public static int verifica(int ocorre, int[] vetor, int id){
+        System.out.println("*- VERIFICA -*");
         int positivo = 0;
-        for(int i = 0; i<vetor.length; i++){
-            if(vetor[i]==ocorre){
-                positivo++;
+        if(id==1) {
+        	for(int i = 0; i<vetor.length; i++){
+                if(vetor[i]==ocorre){
+                    positivo++;
+                }
+            }
+        }else {
+        	for(int i = 0; i<vetor.length; i++){
+                if(vetor[i]==vetor[ocorre]){
+                    positivo++;
+                }
             }
         }
         return positivo;
@@ -132,12 +145,14 @@ public class Exemplo1 {
 
     //Agora vamos verificar o numero de acordo com seu index e na sequencia quantas vezes ele aparece(Exercicios "6 e 7")
     public static void index(int[] vetor){
+    	int id = 2;
+        System.out.println("*- INDEX -*");
         Scanner input = new Scanner(System.in);
         int index, positivo;
         System.out.println("Qual index deseja conferir?");
         index = input.nextInt();
-        positivo = verifica(index, vetor);
-        System.out.printf("O valor 'vetor[%d]: %d' aparece %d vezes", index, vetor[index], positivo);
+        positivo = verifica(index, vetor, id);
+        System.out.printf("O valor 'vetor[%d]: %d' aparece %d vezes\n", index, vetor[index], positivo);
     }
     
     //Só organizar tudo no 'main' e está pronto
