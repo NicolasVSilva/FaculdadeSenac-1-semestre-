@@ -1,16 +1,13 @@
-/*
- * Projeto Integrador 
- * 
- * Huilherme
+/*Projeto Integrador 
+ * Guilherme
  * Lucas
  * Luiz
  * Nicolas
  * Patrick
  * Railan
  * 
- * 07/11/23
- * 
- * vesão:0.2
+ * 08/11/23
+ * vesão:0.3
  */
 
 package codpi;
@@ -92,7 +89,7 @@ public class codpi {
 					}
 					break;
 				case 3:
-					adcEstoqueP(codigosP, nomeP, indice);
+					codigosP = adcEstoqueP(codigosP, nomeP, indice);
 					break;
 				case 4:
 					retEstoqueP(codigosP, nomeP, indice);
@@ -147,7 +144,7 @@ public class codpi {
 
 		for (int i = 0; i < indice; i++) {
 			if (nomeP[i][1].equals(nome)) {
-				System.out.printf("Produto já existente: \n%s\n%s\n%.2f\n%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
+				System.out.printf("Produto já existente: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
 				op = 1;
 			}
 		}
@@ -178,7 +175,7 @@ public class codpi {
 
 		for (int i = 0; i < indice; i++) {
 			if (nomeP[i][1].equals(nome)) {
-				System.out.printf("Produto cadastrado como: \n%s\n%s\n%.2f\n%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
+				System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
 				
 				System.out.println("Deseja realmente removelo?(S/N) ");
 				op = sc.next().charAt(0);
@@ -186,30 +183,30 @@ public class codpi {
 				if(op=='S'||op=='s') {
 					confirma = i;
 					
-					System.out.println("Produto removido com sucesso");
+					System.out.println("Produto removido com sucesso\n");
 					return confirma;
 				}else {
-					System.out.println("Produto mantido em estoque");
+					System.out.println("Produto mantido em estoque\n");
 				}
 			}
 		}
 		
 		if(confirma==0) {
-			System.out.println("Produto não encontrado");
+			System.out.println("Produto não encontrado\n");
 		}
 		
 		return confirma;
 	}
 
-	public static void adcEstoqueP(double[][] codigosP, String[][] nomeP, int indice) {
+	public static double[][] adcEstoqueP(double[][] codigosP, String[][] nomeP, int indice) {
 		Scanner sc = new Scanner(System.in);
 		
-		int escolha =1, id;
+		int escolha =1, id, op=0;
 		String nome;
 		
 		do {
 			if(escolha!=1&&escolha!=2) {
-				System.out.println("Codigo deescolha invalidao");
+				System.out.println("Codigo de escolha invalidao");
 			}
 			
 			System.out.println("Deseja buscar o produto pelo ID ou pelo NOME?(1/2)");
@@ -220,18 +217,112 @@ public class codpi {
 			System.out.println("Digite o id do produto: ");
 			id = sc.nextInt();
 			
+			for(int i=0;i<indice;i++){
+				if(nomeP[i][0].equals(Integer.toString(id))){
+					System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
+					System.out.println("Qual quantidade deseja adicionar?");
+					codigosP[i][1] = sc.nextDouble();
+
+					System.out.println("Qual valor do produto?");
+					codigosP[i][2] = sc.nextDouble();
+					op=1;
+				}
+			}
+			if(op==0){
+				System.out.println("Produto não encontrado\n");
+			}
 		}else {
 			System.out.println("Digite o nome do produto desejado: ");
 			nome = sc.nextLine();
+
+			for(int i=0;i<indice;i++){
+				if(nomeP[i][1].equals(nome)){
+					System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
+					System.out.println("Qual quantidade deseja adicionar?");
+					codigosP[i][1] = sc.nextDouble();
+
+					System.out.println("Qual valor do produto?");
+					codigosP[i][2] = sc.nextDouble();
+					op=1;
+				}
+			}
+			if(op==0){
+				System.out.println("Produto não encontrado\n");
+			}
 		}
+		return codigosP;
 	}
 
-	public static void retEstoqueP(double[][] codigosP, String[][] nomeP, int indice) {
+	public static double[][] retEstoqueP(double[][] codigosP, String[][] nomeP, int indice) {
+		Scanner sc = new Scanner(System.in);
 
+		double quant;
+		int escolha =1, id, op=0;
+		String nome;
+		
+		do {
+			if(escolha!=1&&escolha!=2) {
+				System.out.println("Codigo de escolha invalidao");
+			}
+			
+			System.out.println("Deseja buscar o produto pelo ID ou pelo NOME?(1/2)");
+			System.out.println("1 -ID\n2 -NOME");
+			escolha = sc.nextInt();
+		}while(escolha<1||escolha>2);
+		if(escolha==1) {
+			System.out.println("Digite o id do produto: ");
+			id = sc.nextInt();
+			
+			for(int i=0;i<indice;i++){
+				if(nomeP[i][0].equals(Integer.toString(id))){
+					System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
+					System.out.println("Qual quantidade deseja retirar?");
+					quant = sc.nextDouble();
+
+					if(codigosP[i][1]<quant){
+						System.out.println("Quantidade desejada superior ao existente em estoque");
+					}else{
+						codigosP[i][1] = codigosP[i][1] - quant;
+						System.out.println("Quantia retirada com sucesso, estoque restante: "+codigosP[i][1]);
+					}
+					op=1;
+				}
+			}
+			if(op==0){
+				System.out.println("Produto não encontrado\n");
+			}
+		}else{
+			System.out.println("Digite o nome do produto desejado: ");
+			nome = sc.nextLine();
+
+			for(int i=0;i<indice;i++){
+				if(nomeP[i][1].equals(nome)){
+					System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
+					System.out.println("Qual quantidade deseja retirar?");
+					quant = sc.nextDouble();
+
+					if(codigosP[i][1]<quant){
+						System.out.println("Quantidade desejada superior ao existente em estoque");
+					}else{
+						codigosP[i][1] = codigosP[i][1] - quant;
+						System.out.println("Quantia retirada com sucesso, estoque restante: "+codigosP[i][1]);
+					}
+					op=1;
+				}
+			}
+			if(op==0){
+				System.out.println("Produto não encontrado\n");
+			}
+		}
+		return codigosP;
 	}
 
 	public static void consultaE(double[][] codigosP, String[][] nomeP, int indice) {
+		System.out.println("Lista de Produtos: ");
 
+		for(int i=0;i<indice;i++){
+			System.out.printf("ID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
+		}
 	}
 
 }
