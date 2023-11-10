@@ -17,8 +17,8 @@ import java.util.Scanner;
 public class codpi {
 
 	public static void main(String[] args) {
-		int fun = acesso();
-		menu(fun);
+		int fun = acesso();		//define se o usuario acessa como funcionario ou cliente
+		menu(fun);			//acessa o menu geral
 	}
 
 	public static int acesso() {
@@ -26,7 +26,7 @@ public class codpi {
 		
 		int cl, op = 0;
 		
-		do {
+		do {			//grante que o usuario selecione uma das opções
 			if (op > 0) {
 				System.out.println("Opção invalida\n\n");
 			}
@@ -41,7 +41,7 @@ public class codpi {
 
 		if (cl == 1) {
 			op = 0;
-		} else {
+		} else {		//sabemos que é desnecessario mas facilitou a compreenssão
 			op = 1;
 		}
 		return op;
@@ -50,7 +50,7 @@ public class codpi {
 	public static void menu(int fun) {
 		Scanner sc = new Scanner(System.in);
 		
-		String lista[] = new String[4]; // ID-NOME-QUANT-VAL
+		String lista[] = new String[4]; // ID-NOME-QUANT-VAL   utilizada para controle das demais
 		
 		double codigosP[][] = new double[100][3]; // l-c l=produtos c=id-val-quant
 		String nomeP[][] = new String[100][2]; // l-c l=produtos c=id-nome
@@ -60,13 +60,13 @@ public class codpi {
 			if (fun == 0) {
 				do {
 					System.out.println("Bem vindo - Funcionario\nOque deseja fazer?(digite o numero da opção desejada)\n");
-					System.out.println("1 -Adicionar produto");
-					System.out.println("2 -Retirar produto");
-					System.out.println("3 -Adicionar ao estoque");
-					System.out.println("4 -Retirar do estoque");
-					System.out.println("5 -Consultar estoque");
-					System.out.println("6 -Logar como cliente");
-					System.out.println("7 -Finalizar progama");
+					System.out.println("1 -Adicionar produto");	//cria um produto
+					System.out.println("2 -Retirar produto");	//exclui um produto
+					System.out.println("3 -Adicionar ao estoque");	//adiciona uma quantidade e atribui um valor ao produto
+					System.out.println("4 -Retirar do estoque");	//retira quantidades ou o valor total do estoque de um produto
+					System.out.println("5 -Consultar estoque");	//apresenta uma lista de todos os produtos existentem
+					System.out.println("6 -Logar como cliente");	//troca para o menu do cliente
+					System.out.println("7 -Finalizar progama");	//encerra 
 					op = sc.nextInt();
 	
 					switch (op) {
@@ -114,9 +114,9 @@ public class codpi {
 			} else {
 				do {
 					System.out.println("Bem vindo - Cliente\nOque deseja fazer?(digite o numero da opção desejada)\n");
-					System.out.println("1 -Consultar estoque");
-					System.out.println("2 -Comprar produto");
-					System.out.println("3 -Encerrar sessão");
+					System.out.println("1 -Consultar estoque");	//apresenta uma lista de todos os produtos existentem
+					System.out.println("2 -Comprar produto");	//retira quantidades ou o valor total do estoque de um produto
+					System.out.println("3 -Encerrar sessão");	//encerra
 					op = sc.nextInt();
 	
 					switch (op) {
@@ -148,14 +148,14 @@ public class codpi {
 		System.out.println("Insira o nome do produto: ");
 		nome = sc.nextLine();
 
-		for (int i = 0; i < indice; i++) {
+		for (int i = 0; i < indice; i++) { 		//mostra o produto caso já esteja cadastrado
 			if (nomeP[i][1].equals(nome)) {
 				System.out.printf("Produto já existente: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
 				op = 1;
 			}
 		}
 
-		if (op == 0) {
+		if (op == 0) {					//adiciona o produto caso ele não exista
 			nomeP[indice][0] = Integer.toString(indice);
 			codigosP[indice][0] = indice;
 			nomeP[indice][1] = nome;
@@ -173,31 +173,32 @@ public class codpi {
 	public static int retirarP(double[][] codigosP, String[][] nomeP, int indice) {
 		String nome;
 		char op;
-		int confirma = 0;
+		int confirma = -1;
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("Insira o nome do produto: ");
 		nome = sc.nextLine();
 
-		for (int i = 0; i < indice; i++) {
+		for (int i = 0; i < indice; i++) {				//mostra o produto cadastrado
 			if (nomeP[i][1].equals(nome)) {
 				System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
 				
 				System.out.println("Deseja realmente removelo?(S/N) ");
 				op = sc.next().charAt(0);
 				
-				if(op=='S'||op=='s') {
+				if(op=='S'||op=='s') {				//remove ou mantem um produto
 					confirma = i;
 					
 					System.out.println("Produto removido com sucesso\n");
 					return confirma;
 				}else {
+					confirma = i;
 					System.out.println("Produto mantido em estoque\n");
 				}
 			}
 		}
 		
-		if(confirma==0) {
+		if(confirma==-1) {						//avisa caso o produto não exista
 			System.out.println("Produto não encontrado\n");
 		}
 		
@@ -215,7 +216,7 @@ public class codpi {
 				System.out.println("Codigo de escolha invalidao");
 			}
 			
-			System.out.println("Deseja buscar o produto pelo ID ou pelo NOME?(1/2)");
+			System.out.println("Deseja buscar o produto pelo ID ou pelo NOME?(1/2)");		//tipo de busca
 			System.out.println("1 -ID\n2 -NOME");
 			escolha = sc.nextInt();
 			sc.nextLine();			//um conhecido me ajudou em relação a isso aqui
@@ -225,7 +226,7 @@ public class codpi {
 			id = sc.nextInt();
 			
 			for(int i=0;i<indice;i++){
-				if(nomeP[i][0].equals(Integer.toString(id))){
+				if(nomeP[i][0].equals(Integer.toString(id))){					//sistema de busca
 					System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
 					System.out.println("Qual quantidade deseja adicionar?");
 					codigosP[i][1] = sc.nextDouble();
@@ -243,7 +244,7 @@ public class codpi {
 			nome = sc.nextLine();
 
 			for(int i=0;i<indice;i++){
-				if(nomeP[i][1].equals(nome)){
+				if(nomeP[i][1].equals(nome)){							//sistema de busca
 					System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
 					System.out.println("Qual quantidade deseja adicionar?");
 					codigosP[i][1] = sc.nextDouble();
@@ -309,7 +310,7 @@ public class codpi {
 					System.out.println("Qual quantidade deseja retirar?");
 					quant = sc.nextDouble();
 
-					if(codigosP[i][1]<quant){
+					if(codigosP[i][1]<quant){			//caso tente retirar mais doque o existente o progama não permite
 						System.out.println("Quantidade desejada superior ao existente em estoque");
 					}else{
 						codigosP[i][1] = codigosP[i][1] - quant;
