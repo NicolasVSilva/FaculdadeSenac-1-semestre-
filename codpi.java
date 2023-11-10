@@ -6,8 +6,8 @@
  * Patrick
  * Railan
  * 
- * 08/11/23
- * vesão:0.3
+ * 10/11/23
+ * vesão:0.4
  */
 
 package codpi;
@@ -56,80 +56,86 @@ public class codpi {
 		String nomeP[][] = new String[100][2]; // l-c l=produtos c=id-nome
 		int indice = 0, op = 0;
 
-		if (fun == 0) {
-			do {
-				System.out.println("Bem vindo - Funcionario\nOque deseja fazer?(digite o numero da opção desejada)\n");
-				System.out.println("1 -Adicionar produto");
-				System.out.println("2 -Retirar produto");
-				System.out.println("3 -Adicionar ao estoque");
-				System.out.println("4 -Retirar do estoque");
-				System.out.println("5 -Consultar estoque");
-				System.out.println("6 -Finalizar progama");
-				op = sc.nextInt();
-
-				switch (op) {
-				case 1:
-					lista = adicionarP(codigosP, nomeP, indice);
-
-					if (indice != Integer.parseInt(lista[0])) {
-						indice = Integer.parseInt(lista[0]);
-						nomeP[indice][1] = lista[1];
-					}
-					break;
-				case 2:
-					op = retirarP(codigosP, nomeP, indice);
-					
-					if(op!=0) {
-						codigosP[op][0] = 0;
-						codigosP[op][1] = 0;
-						codigosP[op][2] = 0;
+		do{
+			if (fun == 0) {
+				do {
+					System.out.println("Bem vindo - Funcionario\nOque deseja fazer?(digite o numero da opção desejada)\n");
+					System.out.println("1 -Adicionar produto");
+					System.out.println("2 -Retirar produto");
+					System.out.println("3 -Adicionar ao estoque");
+					System.out.println("4 -Retirar do estoque");
+					System.out.println("5 -Consultar estoque");
+					System.out.println("6 -Logar como cliente");
+					System.out.println("7 -Finalizar progama");
+					op = sc.nextInt();
+	
+					switch (op) {
+					case 1:
+						lista = adicionarP(codigosP, nomeP, indice);
+	
+						if (indice != Integer.parseInt(lista[0])) {
+							indice = Integer.parseInt(lista[0]);
+							nomeP[indice][1] = lista[1];
+						}
+						break;
+					case 2:
+						op = retirarP(codigosP, nomeP, indice);
 						
-						nomeP[op][0] = " ";
-						nomeP[op][1] = " ";
+						if(op!=0) {
+							codigosP[op][0] = 0;
+							codigosP[op][1] = 0;
+							codigosP[op][2] = 0;
+							
+							nomeP[op][0] = " ";
+							nomeP[op][1] = " ";
+						}
+						break;
+					case 3:
+						codigosP = adcEstoqueP(codigosP, nomeP, indice);
+						break;
+					case 4:
+						retEstoqueP(codigosP, nomeP, indice);
+						break;
+					case 5:
+						consultaE(codigosP, nomeP, indice);
+						break;
+					case 6:
+						fun = 1;
+						op = 7;
+						break;
+					case 7:
+						op = 2;
+						break;
+					default:
+						System.out.println("Codigo invalido");
+						break;
 					}
-					break;
-				case 3:
-					codigosP = adcEstoqueP(codigosP, nomeP, indice);
-					break;
-				case 4:
-					retEstoqueP(codigosP, nomeP, indice);
-					break;
-				case 5:
-					consultaE(codigosP, nomeP, indice);
-					break;
-				case 6:
-					break;
-				default:
-					System.out.println("Codigo invalido");
-					break;
-
-				}
-
-			} while (op != 6);
-		} else {
-			do {
-				System.out.println("Bem vindo - Cliente\nOque deseja fazer?(digite o numero da opção desejada)\n");
-				System.out.println("1 -Consultar estoque");
-				System.out.println("2 -Comprar produto");
-				System.out.println("3 -Encerrar sessão");
-				op = sc.nextInt();
-
-				switch (op) {
-				case 1:
-					consultaE(codigosP, nomeP, indice);
-					break;
-				case 2:
-					retEstoqueP(codigosP, nomeP, indice);
-					break;
-				case 3:
-					break;
-				default:
-					System.out.println("Codigo invalido");
-				}
-
-			} while (op != 3);
-		}
-
+				} while (op != 7);
+			} else {
+				do {
+					System.out.println("Bem vindo - Cliente\nOque deseja fazer?(digite o numero da opção desejada)\n");
+					System.out.println("1 -Consultar estoque");
+					System.out.println("2 -Comprar produto");
+					System.out.println("3 -Encerrar sessão");
+					op = sc.nextInt();
+	
+					switch (op) {
+					case 1:
+						consultaE(codigosP, nomeP, indice);
+						break;
+					case 2:
+						retEstoqueP(codigosP, nomeP, indice);
+						break;
+					case 3:
+						fun = 2;
+						break;
+					default:
+						System.out.println("Codigo invalido");
+						break;
+					}
+				} while (op != 3);
+			}
+		}while(fun != 3);
 	}
 
 	public static String[] adicionarP(double[][] codigosP, String[][] nomeP, int indice) {
@@ -212,6 +218,7 @@ public class codpi {
 			System.out.println("Deseja buscar o produto pelo ID ou pelo NOME?(1/2)");
 			System.out.println("1 -ID\n2 -NOME");
 			escolha = sc.nextInt();
+			sc.nextLine();			//um conhecido me ajudou em relação a isso aqui
 		}while(escolha<1||escolha>2);
 		if(escolha==1) {
 			System.out.println("Digite o id do produto: ");
@@ -268,6 +275,7 @@ public class codpi {
 			System.out.println("Deseja buscar o produto pelo ID ou pelo NOME?(1/2)");
 			System.out.println("1 -ID\n2 -NOME");
 			escolha = sc.nextInt();
+			sc.nextLine();			//um conhecido me ajudou em relação a isso aqui
 		}while(escolha<1||escolha>2);
 		if(escolha==1) {
 			System.out.println("Digite o id do produto: ");
