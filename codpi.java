@@ -5,6 +5,7 @@
  * Nicolas
  * Patrick
  * Railan
+ * Pedro
  * 
  * 10/11/23
  * vesão:0.4
