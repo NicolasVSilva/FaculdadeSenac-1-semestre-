@@ -7,8 +7,8 @@
  * Railan
  * Pedro
  * 
- * 10/11/23
- * vesão:0.4
+ * 14/11/23
+ * vesão:0.6 
  */
 
 package codpi;
@@ -18,36 +18,133 @@ import java.util.Scanner;
 public class codpi {
 
 	public static void main(String[] args) {
-		int fun = acesso();		//define se o usuario acessa como funcionario ou cliente
+		int fun = login();		//define se o usuario acessa como funcionario ou cliente
 		menu(fun);			//acessa o menu geral
 	}
 
-	public static int acesso() {
+	public static int login() {		//ainda pretendo separar esse codigo em pequenas funções
 		Scanner sc = new Scanner(System.in);
+		int op = 0, fun = 0, usery = 0;
+		String login = "1", nome, senha1, senha;
+		String[][] user = new String[20][2];
 		
-		int cl, op = 0;
-		
-		do {			//grante que o usuario selecione uma das opções
-			if (op > 0) {
-				System.out.println("Opção invalida\n\n");
+		for(int i=0;i<user.length;i++) {
+			for(int l=0;l<2;l++) {
+				user[i][l]="NULL";
 			}
-			
-			System.out.println("Deseja acessar como funcionario ou cliente?(1/2)");
-			System.out.println("1 -Funcionario\n2 -Cliente");
-			cl = sc.nextInt();
-			System.out.println("\n");
-			
-			op++;
-		} while (cl < 1 || cl > 2);
-
-		if (cl == 1) {
-			op = 0;
-		} else {		//sabemos que é desnecessario mas facilitou a compreenssão
-			op = 1;
 		}
-		return op;
-	}
 
+		do {
+			do {
+				usery=0;
+				System.out.println("O que deseja fazer? (1/2)");
+				System.out.println("1 - Login\n2 - Cadastro");
+				login = sc.nextLine();
+
+				if (!login.equals("1") && !login.equals("2")) {
+					if (!login.matches("\\d+")) {
+						System.out.println("Digite apenas numeros para a opcao 'Login'!");
+					} else {
+						System.out.println("Opcao invalida");
+					}
+				} else if ((login.equals("1") || login.equals("2")) && !login.matches("\\d+")) {
+					System.out.println("Digite apenas numeros para a opcao 'Login'!");
+				} else {
+					op = Integer.parseInt(login);
+				}
+			} while (op < 1 || op > 2);
+
+
+			if (login.equals("1")) {
+				do {
+					usery=0;
+					do {
+						System.out.println("Digite o usuario:");
+						nome = sc.nextLine();
+						if (!nome.matches("\\w+")) {
+							System.out.println("Nomes de usuario possuem apenas letras e numeros.");
+						} else {
+							op = 2;
+						}
+					} while (op != 2);
+
+					for (int i = 0; i < user.length; i++) {
+						if (user[i][0].equals(nome)) {
+							for (int l = 0; l < 3; l++) {
+
+								do {
+									System.out.println("Digite a senha:");
+									senha = sc.nextLine();
+									if (!senha.matches("\\d+")) {
+										System.out.println("As senhas contem apenas numeros!");
+									}
+								} while (!senha.matches("\\d+"));
+
+								if (user[i][1].equals(senha)) {
+									op = 5;
+									System.out.println("Acesso liberado");
+									if(senha.equals("0206")) {
+										fun = 0;
+									}else {
+										fun = 1;							
+									}
+									break;
+								} else {
+									System.out.println("Senha incorreta " + (2 - l) + " tentativas restantes.");
+								}
+							}
+
+						} else {
+							usery++;
+						}
+					}
+					if(usery==user.length) {
+						System.out.println("Usuario não encontrado");
+						op=3;
+					}
+				}while (op == 2 && op!=5);
+			} else {
+
+				do {
+					System.out.println("Digite o nome de usuario:(Apenas letras e numeros)");
+					nome = sc.nextLine();
+					if (!nome.matches("\\w+")) {
+						System.out.println("Nomes de usuario devem conter apenas letras e numeros!");
+					}
+				} while (!nome.matches("\\w+"));
+
+				do {
+					System.out.println("Digite a senha:(Apenas numeros)");
+					senha = sc.nextLine();
+					if (!senha.matches("\\d+")) {
+						System.out.println("Senhas contem apenas numeros!");
+					}
+				} while (!senha.matches("\\d+"));
+
+				do {
+					System.out.println("Confirme a senha:");
+					senha1 = sc.nextLine();
+
+					if (senha.equals(senha1)) {
+						System.out.println("Cadastro feito com suscesso");
+						
+						for (int i = 0; i < user.length; i++) {
+							if (user[i][0].equals("NULL")) {
+								user[i][0] = nome;
+								user[i][1] = senha;
+								break;
+							}
+						}
+						op=2;
+					} else {
+						System.out.println("Senhas incompativeis, confirme novamente!");
+						op = 3;
+					}
+				} while (op != 2);
+			}
+		} while ((op==2 ||op==3) && op!=5);
+		return fun;
+	}
 	public static void menu(int fun) {
 		Scanner sc = new Scanner(System.in);
 		
