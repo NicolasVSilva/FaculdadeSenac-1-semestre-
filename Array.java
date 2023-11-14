@@ -117,21 +117,3 @@ public class Array {
 		}
 	}
 }
-/*
-Exercí­cios de Vetores
-
-i. Uma função imprimeVetor() que exibe todos os elementos do vetor;
-
-
- */
-
-
-
-
-
-
-
-
-
-
-
