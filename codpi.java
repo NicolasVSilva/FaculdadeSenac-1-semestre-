@@ -7,8 +7,8 @@
  * Railan
  * Pedro
  * 
- * 14/11/23
- * vesão:0.6 
+ * 24/11/23
+ * vesão:0.7 
  */
 
 package codpi;
@@ -151,22 +151,29 @@ public class codpi {
 		String lista[] = new String[4]; // ID-NOME-QUANT-VAL   utilizada para controle das demais
 		
 		double codigosP[][] = new double[100][3]; // l-c l=produtos c=id-val-quant
-		String nomeP[][] = new String[100][2]; // l-c l=produtos c=id-nome
+		String nomeP[][] = new String[100][2], ops="0"; // l-c l=produtos c=id-nome
 		int indice = 0, op = 0;
 
 		do{
 			if (fun == 0) {
 				do {
-					System.out.println("Bem vindo - Funcionario\nOque deseja fazer?(digite o numero da opção desejada)\n");
-					System.out.println("1 -Adicionar produto");	//cria um produto
-					System.out.println("2 -Retirar produto");	//exclui um produto
-					System.out.println("3 -Adicionar ao estoque");	//adiciona uma quantidade e atribui um valor ao produto
-					System.out.println("4 -Retirar do estoque");	//retira quantidades ou o valor total do estoque de um produto
-					System.out.println("5 -Consultar estoque");	//apresenta uma lista de todos os produtos existentem
-					System.out.println("6 -Logar como cliente");	//troca para o menu do cliente
-					System.out.println("7 -Finalizar progama");	//encerra 
-					op = sc.nextInt();
-	
+					do{
+						if(!ops.matches("\\d+")){
+							System.out.println("digite o numero da opção desejada!!");
+						}
+						System.out.println("Bem vindo - Funcionario\nOque deseja fazer?\n");
+						System.out.println("1 -Adicionar produto");	//cria um produto
+						System.out.println("2 -Retirar produto");	//exclui um produto
+						System.out.println("3 -Adicionar ao estoque");	//adiciona uma quantidade e atribui um valor ao produto
+						System.out.println("4 -Retirar do estoque");	//retira quantidades ou o valor total do estoque de um produto
+						System.out.println("5 -Consultar estoque");	//apresenta uma lista de todos os produtos existentem
+						System.out.println("6 -Logar como cliente");	//troca para o menu do cliente
+						System.out.println("7 -Finalizar progama");	//encerra 
+						ops = sc.nextLine();
+					}while(!ops.matches("\\d+"));
+
+					op = Integer.parseInt(ops);
+		
 					switch (op) {
 					case 1:
 						lista = adicionarP(codigosP, nomeP, indice);
@@ -179,7 +186,7 @@ public class codpi {
 					case 2:
 						op = retirarP(codigosP, nomeP, indice);
 						
-						if(op!=0) {
+						if(op!=-1) {
 							codigosP[op][0] = 0;
 							codigosP[op][1] = 0;
 							codigosP[op][2] = 0;
@@ -202,7 +209,8 @@ public class codpi {
 						op = 7;
 						break;
 					case 7:
-						op = 2;
+						fun = 3;
+						System.out.println("Obrigado por utilizar nosso sistema!!");
 						break;
 					default:
 						System.out.println("Codigo invalido");
@@ -225,7 +233,7 @@ public class codpi {
 						retEstoqueP(codigosP, nomeP, indice);
 						break;
 					case 3:
-						fun = 2;
+						fun = 3;
 						break;
 					default:
 						System.out.println("Codigo invalido");
@@ -233,18 +241,23 @@ public class codpi {
 					}
 				} while (op != 3);
 			}
-		}while(fun != 3);
+		}while(fun != 3 && (op != 3 || op != 7));
 	}
 
 	public static String[] adicionarP(double[][] codigosP, String[][] nomeP, int indice) {
 		String lista[] = new String[4];
-		String nome;
+		String nome = "a";
 		int op = 0;
 
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println("Insira o nome do produto: ");
-		nome = sc.nextLine();
+		do{
+			if(!nome.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 ]*$")){
+				System.out.println("Sem caracteres especiais");
+			}
+			System.out.println("Insira o nome do produto: ");
+			nome = sc.nextLine();
+		}while(!nome.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 ]*$"));
 
 		for (int i = 0; i < indice; i++) { 		//mostra o produto caso já esteja cadastrado
 			if (nomeP[i][1].equals(nome)) {
@@ -269,20 +282,30 @@ public class codpi {
 	}
 
 	public static int retirarP(double[][] codigosP, String[][] nomeP, int indice) {
-		String nome;
-		char op;
+		String nome = "a";
+		char op = 'S';
 		int confirma = -1;
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println("Insira o nome do produto: ");
-		nome = sc.nextLine();
+		do{
+			if(!nome.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 ]*$")){
+				System.out.println("Sem caracteres especiais");
+			}
+			System.out.println("Insira o nome do produto: ");
+			nome = sc.nextLine();
+		}while(!nome.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 ]*$"));
 
 		for (int i = 0; i < indice; i++) {				//mostra o produto cadastrado
 			if (nomeP[i][1].equals(nome)) {
 				System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
-				
-				System.out.println("Deseja realmente removelo?(S/N) ");
-				op = sc.next().charAt(0);
+
+				do{
+					if(op != 'S'&& op!='s'&& op!='N'&& op!='n'){
+						System.out.println("Apenas Letras!!");
+					}
+					System.out.println("Deseja realmente removelo?(S/N) ");
+					op = sc.next().charAt(0);
+				}while(op != 'S'&& op!='s'&& op!='N'&& op!='n');
 				
 				if(op=='S'||op=='s') {				//remove ou mantem um produto
 					confirma = i;
