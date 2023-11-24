@@ -470,12 +470,12 @@ public class codpi {
 					System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
 
 					do{
-						if(!quant1.matches(\\d+)){
+						if(!quant1.matches("\\d+")){
 							System.out.println("Apenas Numeros!!");
 						}
 						System.out.println("Qual quantidade deseja retirar?");
 						quant1 = sc.nextLine();
-					}while(!quant1.matches(\\d+));
+					}while(!quant1.matches("\\d+"));
 
 					quant = Integer.parseInt(quant1);
 					
@@ -505,12 +505,12 @@ public class codpi {
 					System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
 					
 					do{
-						if(!quant1.matches(\\d+)){
+						if(!quant1.matches("\\d+")){
 							System.out.println("Apenas Numeros!!");
 						}
 						System.out.println("Qual quantidade deseja retirar?");
 						quant1 = sc.nextLine();
-					}while(!quant1.matches(\\d+));
+					}while(!quant1.matches("\\d+"));
 
 					quant = Integer.parseInt(quant1);
 
