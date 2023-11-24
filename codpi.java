@@ -330,30 +330,58 @@ public class codpi {
 		Scanner sc = new Scanner(System.in);
 		
 		int escolha =1, id, op=0;
-		String nome;
-		
-		do {
-			if(escolha!=1&&escolha!=2) {
-				System.out.println("Codigo de escolha invalidao");
-			}
+		String nome="a", escolha1="0", id1="0", quant="0", val="0";
+
+		do{
+			do {
+				if(!escolha1.matches("\\d+")) {
+					System.out.println("Digite apenas numeros");
+				}
+				if(escolha != 1 && escolha != 2){
+					System.out.println("Opção invalida");
+				}
+				
+				System.out.println("Deseja buscar o produto pelo ID ou pelo NOME?(1/2)");		//tipo de busca
+				System.out.println("1 -ID\n2 -NOME");
+				escolha1 = sc.nextLine();
+			}while(!escolha1.matches("\\d+"));
 			
-			System.out.println("Deseja buscar o produto pelo ID ou pelo NOME?(1/2)");		//tipo de busca
-			System.out.println("1 -ID\n2 -NOME");
-			escolha = sc.nextInt();
-			sc.nextLine();			//um conhecido me ajudou em relação a isso aqui
-		}while(escolha<1||escolha>2);
+			escolha = Integer.parseInt(escolha1);
+		}while(escolha != 1 && escolha != 2);
+		
 		if(escolha==1) {
-			System.out.println("Digite o id do produto: ");
-			id = sc.nextInt();
+			
+			do{
+				if(!id1.matches("\\d+")){
+					System.out.println("Apenas Numeros!!");
+				}
+				System.out.println("Digite o id do produto: ");
+				id1 = sc.nextLine();
+			}while(!id1.matches("\\d+"));
+			
+			id = Integer.parseInt(id1);
 			
 			for(int i=0;i<indice;i++){
 				if(nomeP[i][0].equals(Integer.toString(id))){					//sistema de busca
 					System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
-					System.out.println("Qual quantidade deseja adicionar?");
-					codigosP[i][1] = sc.nextDouble();
+					do{
+						if(!quant.matches("\\d+")){
+							System.out.println("Apenas Numeros!!");
+						}
+						System.out.println("Qual quantidade deseja adicionar?");
+						quant = sc.nextLine();
+					}while(!quant.matches("\\d+"));
 
-					System.out.println("Qual valor do produto?");
-					codigosP[i][2] = sc.nextDouble();
+					codigosP[i][1] = Integer.parseInt(quant);
+
+					do{
+						if(!val.matches("^[0-9]+([,.][0-9]+)?$")){
+							System.out.println("Apenas Numeros!!");
+						}
+						System.out.println("Qual valor do produto?");
+						val = sc.nextLine();
+					}while(!val.matches("^[0-9]+([,.][0-9]+)?$"));
+					codigosP[i][2] = Double.parseDouble(val);
 					op=1;
 				}
 			}
@@ -361,17 +389,37 @@ public class codpi {
 				System.out.println("Produto não encontrado\n");
 			}
 		}else {
-			System.out.println("Digite o nome do produto desejado: ");
-			nome = sc.nextLine();
+			do{
+				if(!nome.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 ]*$")){
+					System.out.println("Sem caracteres especiais");
+				}
+				System.out.println("Digite o nome do produto desejado: ");
+				nome = sc.nextLine();
+			}while(!nome.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 ]*$"));
 
 			for(int i=0;i<indice;i++){
 				if(nomeP[i][1].equals(nome)){							//sistema de busca
 					System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
-					System.out.println("Qual quantidade deseja adicionar?");
-					codigosP[i][1] = sc.nextDouble();
 
-					System.out.println("Qual valor do produto?");
-					codigosP[i][2] = sc.nextDouble();
+					
+					do{
+						if(!quant.matches("\\d+")){
+							System.out.println("Apenas Numeros!!");
+						}
+						System.out.println("Qual quantidade deseja adicionar?");
+						quant = sc.nextLine();
+					}while(!quant.matches("\\d+"));
+
+					codigosP[i][1] = Integer.parseInt(quant);
+
+					do{
+						if(!val.matches("^[0-9]+([,.][0-9]+)?$")){
+							System.out.println("Apenas Numeros!!");
+						}
+						System.out.println("Qual valor do produto?");
+						val = sc.nextLine();
+					}while(!val.matches("^[0-9]+([,.][0-9]+)?$"));
+					codigosP[i][2] = Double.parseDouble(val);
 					op=1;
 				}
 			}
@@ -387,28 +435,50 @@ public class codpi {
 
 		double quant;
 		int escolha =1, id, op=0;
-		String nome;
+		String nome="a", escolha1="0", quant1="1", id1="0";
 		
-		do {
-			if(escolha!=1&&escolha!=2) {
-				System.out.println("Codigo de escolha invalidao");
-			}
+		do{
+			do {
+				if(!escolha1.matches("\\d+")) {
+					System.out.println("Digite apenas numeros");
+				}
+				if(escolha != 1 && escolha != 2){
+					System.out.println("Opção invalida");
+				}
+				
+				System.out.println("Deseja buscar o produto pelo ID ou pelo NOME?(1/2)");		//tipo de busca
+				System.out.println("1 -ID\n2 -NOME");
+				escolha1 = sc.nextLine();
+			}while(!escolha1.matches("\\d+"));
 			
-			System.out.println("Deseja buscar o produto pelo ID ou pelo NOME?(1/2)");
-			System.out.println("1 -ID\n2 -NOME");
-			escolha = sc.nextInt();
-			sc.nextLine();			//um conhecido me ajudou em relação a isso aqui
-		}while(escolha<1||escolha>2);
+			escolha = Integer.parseInt(escolha1);
+		}while(escolha != 1 && escolha != 2);
+		
 		if(escolha==1) {
-			System.out.println("Digite o id do produto: ");
-			id = sc.nextInt();
+			do{
+				if(!id1.matches("\\d+")){
+					System.out.println("Apenas Numeros!!");
+				}
+				System.out.println("Digite o id do produto: ");
+				id1 = sc.nextLine();
+			}while(!id1.matches("\\d+"));
+			
+			id = Integer.parseInt(id1);
 			
 			for(int i=0;i<indice;i++){
 				if(nomeP[i][0].equals(Integer.toString(id))){
 					System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
-					System.out.println("Qual quantidade deseja retirar?");
-					quant = sc.nextDouble();
 
+					do{
+						if(!quant1.matches(\\d+)){
+							System.out.println("Apenas Numeros!!");
+						}
+						System.out.println("Qual quantidade deseja retirar?");
+						quant1 = sc.nextLine();
+					}while(!quant1.matches(\\d+));
+
+					quant = Integer.parseInt(quant1);
+					
 					if(codigosP[i][1]<quant){
 						System.out.println("Quantidade desejada superior ao existente em estoque");
 					}else{
@@ -422,14 +492,27 @@ public class codpi {
 				System.out.println("Produto não encontrado\n");
 			}
 		}else{
-			System.out.println("Digite o nome do produto desejado: ");
-			nome = sc.nextLine();
+			do{
+				if(!nome.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 ]*$")){
+					System.out.println("Sem caracteres especiais");
+				}
+				System.out.println("Digite o nome do produto desejado: ");
+				nome = sc.nextLine();
+			}while(!nome.matches("^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 ]*$"));
 
 			for(int i=0;i<indice;i++){
 				if(nomeP[i][1].equals(nome)){
 					System.out.printf("Produto cadastrado como: \nID:\t%s\nNOME:\t%s\nQUANT:\t%.2f\nVAL:\tR$%.2f\n", nomeP[i][0], nomeP[i][1], codigosP[i][1], codigosP[i][2]);
-					System.out.println("Qual quantidade deseja retirar?");
-					quant = sc.nextDouble();
+					
+					do{
+						if(!quant1.matches(\\d+)){
+							System.out.println("Apenas Numeros!!");
+						}
+						System.out.println("Qual quantidade deseja retirar?");
+						quant1 = sc.nextLine();
+					}while(!quant1.matches(\\d+));
+
+					quant = Integer.parseInt(quant1);
 
 					if(codigosP[i][1]<quant){			//caso tente retirar mais doque o existente o progama não permite
 						System.out.println("Quantidade desejada superior ao existente em estoque");
